@@ -11,6 +11,8 @@ release notes are taken from). `scripts/release.ps1` moves the entries under
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-11-19
+
 ### Added
 - **VPSI** (viewport scale information, from VPSI.LSP).
 - **XFZ**, **XTW**, **XFIX** (xref layer freeze / thaw / fix to own layer, from XFIX.LSP) and **VPM** (viewport outline to model space, from VP-OUTLINE.LSP).

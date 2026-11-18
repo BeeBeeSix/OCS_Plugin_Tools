@@ -1,0 +1,5 @@
+[toolchain]
+# Pinned to the host release's toolchain
+# for reproducible builds.
+channel = "1.99.1"
+profile = "minimal"

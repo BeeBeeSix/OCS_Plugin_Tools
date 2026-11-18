@@ -11,6 +11,9 @@ release notes are taken from). `scripts/release.ps1` moves the entries under
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-11-19
+- MACOS removed as having issues with release !
+
 ## [0.2.2] - 2026-11-19
 
 ### Added

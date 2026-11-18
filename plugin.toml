@@ -1,7 +1,7 @@
 [plugin]
 id = "com.beebeesix.ocs-plugin-tools"
 name = "Tools"
-version = "0.2.2"
+version = "0.2.3"
 description = "A collection of tools for Open CAD Studio."
 author = "BeeBeeSix"
 license = "GPL-3.0-only"

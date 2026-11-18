@@ -22,9 +22,6 @@ jobs:
           - os: windows-latest
             lib: ocs_plugin_tools.dll
             asset: com.beebeesix.ocs-plugin-tools-windows-x86_64.dll
-          - os: macos-latest
-            lib: libocs_plugin_tools.dylib
-            asset: com.beebeesix.ocs-plugin-tools-macos-aarch64.dylib
 
     steps:
       - name: Checkout repository

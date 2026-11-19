@@ -11,6 +11,8 @@ release notes are taken from). `scripts/release.ps1` moves the entries under
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-11-19
+
 ### Added
 - **TOOLSHELP** and a **Help** ribbon button: opens the built-in help page (`help/ocs_tools_help.html`) in the browser.
 - Aliases from TT-START.LSP (see the README table): `Y`, `UC3`, `C2`, zoom shortcuts, layer-wide `F*`/`O*`/`T*`/`A*`, osnap `OE`/`OI`/`ON`, purge `PUA`/`PULI`/`PUB`, units `AH`/`AV` and more.

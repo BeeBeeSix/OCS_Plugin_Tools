@@ -7,7 +7,9 @@
 //! plugin process, next to the CAD window, and writes into the drawing through the host's
 //! validated table operations, as one undo step.
 
+mod aliases;
 mod dvt;
+mod help;
 mod model;
 mod ui;
 mod views;
@@ -32,7 +34,7 @@ static MANIFEST: PluginManifest = PluginManifest {
     api_version: ApiVersion::CURRENT,
     ribbon_order: 120,
     xdata_apps: &[],
-    command_prefixes: &["STEAL", "DVT", "01", "02", "03", "04", "05", "06", "07", "08", "09", "ZE", "UV", "UW", "XFZ", "XTW", "XFIX", "VPM", "VPSI"],
+    command_prefixes: &["STEAL", "DVT", "01", "02", "03", "04", "05", "06", "07", "08", "09", "ZE", "UV", "UW", "XFZ", "XTW", "XFIX", "VPM", "VPSI", "Y", "UC3", "3F", "AE", "C2", "DDE", "DLE", "F*", "O*", "LOF", "LON", "T*", "A*", "OL", "OE", "OI", "ON", "IB", "CB", "PG", "PGA", "CW", "PW", "T2M", "CLOUD", "UE", "UG", "UP", "UPS", "UGS", "VR", "VS", "ZD", "ZX", "ZP", "ZW", "ZO", "ZI", "Z8", "LOGO", "LOGF", "AH", "AV", "PUA", "PULI", "PUB", "TOOLSHELP"],
 };
 
 /// Step-by-step log in the temp folder (%TEMP%\ocs-tools.log) so a silent failure can be diagnosed.
@@ -140,6 +142,14 @@ impl BuiltinPlugin for ToolsPlugin {
     }
 
     fn dispatch(&self, host: &mut dyn HostApi, cmd: &str) -> bool {
+        if cmd.eq_ignore_ascii_case("TOOLSHELP") {
+            help::run(host);
+            return true;
+        }
+        if let Some(act) = aliases::lookup(cmd) {
+            aliases::run(host, cmd, act);
+            return true;
+        }
         if let Some(c) = xref::command(cmd) {
             xref::run(host, c);
             return true;
@@ -153,23 +163,7 @@ impl BuiltinPlugin for ToolsPlugin {
             return true;
         }
         if let Some(line) = views::host_command(cmd) {
-            // One call per line. A command left running (UCS waits at its prompt) would take the
-            // next line as answers to its prompts, so ESC clears it between lines.
-            let mut first = true;
-            for l in line.lines() {
-                if !first {
-                    host.execute_command("ESC");
-                }
-                first = false;
-                if !host.execute_command(l) {
-                    host.push_error(&format!("{cmd}: host did not run \"{l}\""));
-                    break;
-                }
-            }
-            if line.contains('\n') {
-                // The last line may leave its command at a prompt (DVIEW waits for an option).
-                host.execute_command("ESC");
-            }
+            views::run_lines(host, cmd, line, line.contains('\n'));
             return true;
         }
         if cmd.eq_ignore_ascii_case("DVT") {
@@ -241,6 +235,15 @@ impl CadModule for ToolsModule {
                             event: ModuleEvent::Command("VPSI".to_string()),
                         }),
                     ],
+                },
+                RibbonGroup {
+                    title: "Help",
+                    tools: vec![RibbonItem::LargeTool(ToolDef {
+                        id: "TOOLSHELP",
+                        label: "Help",
+                        icon: IconKind::Glyph("?"),
+                        event: ModuleEvent::Command("TOOLSHELP".to_string()),
+                    })],
                 },
                 RibbonGroup {
                     title: "Xref",

@@ -44,3 +44,25 @@ mod tests {
         assert!(COMMANDS.iter().all(|c| host_command(c).is_some()));
     }
 }
+
+use ocs_plugin_api::host::HostApi;
+
+/// Run host command line(s), one `execute_command` per line. A command left running would
+/// take the next line as answers to its prompts, so `ESC` goes between lines, and after the
+/// last one when `esc_last`.
+pub fn run_lines(host: &mut dyn HostApi, cmd: &str, lines: &str, esc_last: bool) {
+    let mut first = true;
+    for l in lines.lines() {
+        if !first {
+            host.execute_command("ESC");
+        }
+        first = false;
+        if !host.execute_command(l) {
+            host.push_error(&format!("{cmd}: host did not run \"{l}\""));
+            return;
+        }
+    }
+    if esc_last {
+        host.execute_command("ESC");
+    }
+}

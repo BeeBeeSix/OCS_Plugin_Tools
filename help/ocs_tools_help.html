@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tools for Open CAD Studio - help</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root { --bg:#ffffff; --fg:#1d2733; --muted:#5b6876; --line:#d8dee6; --code:#eef2f7; --accent:#0b6bcb; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#14181e; --fg:#e3e8ee; --muted:#9aa7b5; --line:#2a323c; --code:#222a34; --accent:#6db3ff; }
+}
+body { font:15px/1.55 system-ui, "Segoe UI", sans-serif; background:var(--bg); color:var(--fg); max-width:60rem; margin:0 auto; padding:1.5rem 1.25rem 4rem; }
+h1 { font-size:1.7rem; margin:.2rem 0 .3rem; }
+h2 { font-size:1.2rem; margin:2.2rem 0 .6rem; padding-bottom:.25rem; border-bottom:1px solid var(--line); }
+p, li { max-width:46rem; }
+.lead { color:var(--muted); }
+code { background:var(--code); padding:.08rem .35rem; border-radius:4px; font:0.92em ui-monospace, Consolas, monospace; }
+table { border-collapse:collapse; width:100%; margin:.6rem 0 1rem; }
+th, td { text-align:left; vertical-align:top; padding:.4rem .6rem; border-bottom:1px solid var(--line); }
+th { color:var(--muted); font-weight:600; font-size:.85rem; }
+td:first-child { white-space:nowrap; width:9rem; }
+.note { border-left:3px solid var(--accent); padding:.2rem .9rem; margin:1rem 0; background:var(--code); }
+</style>
+</head>
+<body>
+<h1>Tools for Open CAD Studio</h1>
+<p class="lead">A collection of drawing tools. Type a command at the command line, or use the buttons on the <b>Tools</b> ribbon tab. Command names are not case sensitive.</p>
+
+<h2>Steal - import from another drawing</h2>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>STEAL</code></td><td>Opens the Steal window. Pick a source drawing (DXF or DWG) and import its layers, linetypes, text styles, dimension styles and blocks into the drawing you have open. One Undo step. Closing the window only hides it; <code>STEAL</code> brings it back.</td></tr>
+</table>
+<ul>
+<li>Use the type list on the left to switch between layers, linetypes, text styles, dimension styles and blocks. The filter takes comma separated text; an entry with <code>*</code> or <code>?</code> is a wildcard.</li>
+<li>Items marked <i>(exists)</i> are skipped unless <i>Overwrite</i> is ticked (never for blocks).</li>
+<li>Run <code>STEAL</code> from the drawing tab you want to import into. The log is in <code>%TEMP%\ocs-tools.log</code>.</li>
+</ul>
+
+<h2>Views and UCS</h2>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>DVT</code></td><td>Twisted view. Pick two points for the horizontal you want. The line is drawn on layer <code>defpoints</code>, the UCS is set to World and then along the line, the view is turned to plan of that UCS, snap angle goes to 0, the current layer to <code>0</code>, and the UCS is saved as <code>CURRENT_VIEW</code>.</td></tr>
+<tr><td><code>UV</code></td><td>Restore the UCS that <code>DVT</code> saved (<code>CURRENT_VIEW</code>).</td></tr>
+<tr><td><code>UW</code></td><td>UCS World, then view twist 0.</td></tr>
+<tr><td><code>01</code></td><td>South-west isometric view.</td></tr>
+<tr><td><code>02</code></td><td>Front view.</td></tr>
+<tr><td><code>03</code></td><td>South-east isometric view.</td></tr>
+<tr><td><code>04</code></td><td>Left view.</td></tr>
+<tr><td><code>05</code></td><td>Top view (World).</td></tr>
+<tr><td><code>06</code></td><td>Right view.</td></tr>
+<tr><td><code>07</code></td><td>North-west isometric view.</td></tr>
+<tr><td><code>08</code></td><td>Back view.</td></tr>
+<tr><td><code>09</code></td><td>North-east isometric view.</td></tr>
+<tr><td><code>ZE</code></td><td>Zoom extents.</td></tr>
+</table>
+
+<h2>Viewports</h2>
+<div class="note">Select the viewport on a layout first, then run the command. Both commands only work on a layout tab, not on the Model tab.</div>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>VPM</code></td><td>Viewport to model space: draws a closed polyline on layer <code>VP</code> (colour 41) in model space, along the area the viewport shows. A viewport clipped to a polyline follows that boundary (arcs become straight segments). Perspective viewports are not supported.</td></tr>
+<tr><td><code>VPSI</code></td><td>Viewport scale information: prints <code>VPSCALE = 1:N</code>, with N = 1000 / (viewport height / view height), which assumes paper in mm and model in metres. With several viewports selected each is listed by number.</td></tr>
+</table>
+
+<h2>Xrefs</h2>
+<p>These work on the layer that has the same name as each xref.</p>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>XFZ</code></td><td>Freeze the layer named like each xref. Xrefs with no such layer are listed.</td></tr>
+<tr><td><code>XTW</code></td><td>Thaw those layers.</td></tr>
+<tr><td><code>XFIX</code></td><td>Move every xref reference that is not on its own layer onto the layer named like the xref (created if missing), then lock that layer.</td></tr>
+</table>
+
+<h2>Short aliases</h2>
+<p>From TT-START.LSP. Most start the matching Open CAD Studio command, which then asks for the rest as usual.</p>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>Y</code></td><td>Undo one step.</td></tr>
+<tr><td><code>UC3</code></td><td><code>UCS</code> 3POINT.</td></tr>
+<tr><td><code>3F</code></td><td><code>3DFACE</code>.</td></tr>
+<tr><td><code>AE</code></td><td><code>AREA</code> by object.</td></tr>
+<tr><td><code>C2</code></td><td><code>CIRCLE</code> 2P.</td></tr>
+<tr><td><code>DDE</code></td><td><code>ATTEDIT</code>.</td></tr>
+<tr><td><code>DLE</code></td><td><code>LEADER</code>.</td></tr>
+<tr><td><code>CLOUD</code></td><td><code>REVCLOUD</code>.</td></tr>
+<tr><td><code>T2M</code></td><td><code>TXT2MTXT</code>.</td></tr>
+<tr><td><code>IB</code></td><td>Make layer 0 current, then <code>INSERT</code>.</td></tr>
+<tr><td><code>CB</code></td><td><code>COPYBASE</code> with base point 0,0,0.</td></tr>
+<tr><td><code>PG</code></td><td>Paste from the clipboard at 0,0,0.</td></tr>
+<tr><td><code>PGA</code></td><td>Paste at 0,0,0, then <code>AUDIT</code> with fix.</td></tr>
+<tr><td><code>CW</code></td><td>UCS World, then <code>COPYBASE</code> at 0,0,0.</td></tr>
+<tr><td><code>PW</code></td><td>UCS World, then paste at 0,0,0.</td></tr>
+<tr><td><code>UE</code></td><td><code>UCS</code> by object.</td></tr>
+<tr><td><code>UG</code></td><td>Restore UCS <code>GEODETIC</code>.</td></tr>
+<tr><td><code>UP</code></td><td>Restore UCS <code>PROJECT</code>.</td></tr>
+<tr><td><code>UGS</code></td><td>Save the current UCS as <code>GEODETIC</code>.</td></tr>
+<tr><td><code>UPS</code></td><td>Save the current UCS as <code>PROJECT</code>.</td></tr>
+<tr><td><code>VR</code></td><td>Restore a named view.</td></tr>
+<tr><td><code>VS</code></td><td>Save a named view.</td></tr>
+<tr><td><code>LOGO</code></td><td>Log file on.</td></tr>
+<tr><td><code>LOGF</code></td><td>Log file off.</td></tr>
+</table>
+
+<h3>Zoom</h3>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>ZD</code></td><td>Zoom dynamic.</td></tr>
+<tr><td><code>ZX</code></td><td>Zoom extents.</td></tr>
+<tr><td><code>ZP</code></td><td>Zoom previous.</td></tr>
+<tr><td><code>ZW</code></td><td>Zoom window.</td></tr>
+<tr><td><code>ZO</code></td><td>Zoom out to 0.5x.</td></tr>
+<tr><td><code>ZI</code></td><td>Zoom in to 2x.</td></tr>
+<tr><td><code>Z8</code></td><td>Zoom to .8x.</td></tr>
+</table>
+
+<h3>Layers</h3>
+<p>These change every layer in one go. The current layer is always left alone.</p>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>F*</code></td><td>Freeze all layers.</td></tr>
+<tr><td><code>O*</code></td><td>Turn all layers off.</td></tr>
+<tr><td><code>LOF</code></td><td>Turn all layers off (same as <code>O*</code>).</td></tr>
+<tr><td><code>LON</code></td><td>Turn all layers on.</td></tr>
+<tr><td><code>T*</code></td><td>Thaw all layers.</td></tr>
+<tr><td><code>A*</code></td><td>Thaw and turn on all layers, then regenerate.</td></tr>
+<tr><td><code>OL</code></td><td>Start <code>LAYER</code> OFF (you name the layer).</td></tr>
+</table>
+
+<h3>Osnap, purge and units</h3>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>OE</code></td><td>Running osnap: endpoint only.</td></tr>
+<tr><td><code>OI</code></td><td>Running osnap: intersection only.</td></tr>
+<tr><td><code>ON</code></td><td>Running osnap: none.</td></tr>
+<tr><td><code>PUA</code></td><td>Make layer 0 current and purge everything the host can purge. Registered applications and scales are not purged by Open CAD Studio.</td></tr>
+<tr><td><code>PULI</code></td><td>Make layer 0 current and purge unused linetypes.</td></tr>
+<tr><td><code>PUB</code></td><td>Make layer 0 current and purge unused blocks.</td></tr>
+<tr><td><code>AH</code></td><td>Units for horizontal work: decimal, 3 places, decimal degrees, angles from 0 counter-clockwise.</td></tr>
+<tr><td><code>AV</code></td><td>Units for vertical work: decimal, 3 places, degrees/minutes/seconds, angles from 90 clockwise.</td></tr>
+</table>
+
+<h2>Help</h2>
+<table>
+<tr><th>Command</th><th>What it does</th></tr>
+<tr><td><code>TOOLSHELP</code></td><td>Opens this page.</td></tr>
+</table>
+
+<h2>Good to know</h2>
+<ul>
+<li>Every step of Steal is logged to <code>%TEMP%\ocs-tools.log</code>.</li>
+<li>If an alias does nothing, the command line shows what the host refused.</li>
+<li>The shortcuts that run several commands send each one separately and clear any command left waiting before the next.</li>
+</ul>
+</body>
+</html>

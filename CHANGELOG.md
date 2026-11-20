@@ -11,6 +11,15 @@ release notes are taken from). `scripts/release.ps1` moves the entries under
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-11-21
+
+### Changed
+- **DSM** / **DSMM**: the scale factor is typed as text, with `p` for a decimal point (`2p5` = 2.5, named `1:2p5` / `1:2p5m`); decimal factors are no longer rounded in the scale name.
+- **VPM** and **VPSI** work from MSPACE of a layout: select nothing, run the command and click inside the active viewport. VPSI shows the scale in the prompt and keeps asking until you press Enter.
+
+### Added
+- **DSM** and **DSMM** (drawing scale in metres / millimetres, from DSM.LSP): ask for the scale factor, add the annotation scale to the scale list, make it current and set `DIMSCALE`.
+
 ## [0.2.4] - 2026-11-19
 
 ### Added

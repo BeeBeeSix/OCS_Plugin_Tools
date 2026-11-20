@@ -1,7 +1,7 @@
 [plugin]
 id = "com.beebeesix.ocs-plugin-tools"
 name = "Tools"
-version = "0.2.4"
+version = "0.2.5"
 description = "A collection of tools for Open CAD Studio."
 author = "BeeBeeSix"
 license = "GPL-3.0-only"
@@ -11,5 +11,5 @@ repository = "https://github.com/BeeBeeSix/OCS_Plugin_Tools"
 # Must match your Open CAD Studio version (v2026.46 = API 23)
 api_version = 23
 ribbon_order = 120
-command_prefixes = ["STEAL", "DVT", "01", "02", "03", "04", "05", "06", "07", "08", "09", "ZE", "UV", "UW", "XFZ", "XTW", "XFIX", "VPM", "VPSI", "Y", "UC3", "3F", "AE", "C2", "DDE", "DLE", "F*", "O*", "LOF", "LON", "T*", "A*", "OL", "OE", "OI", "ON", "IB", "CB", "PG", "PGA", "CW", "PW", "T2M", "CLOUD", "UE", "UG", "UP", "UPS", "UGS", "VR", "VS", "ZD", "ZX", "ZP", "ZW", "ZO", "ZI", "Z8", "LOGO", "LOGF", "AH", "AV", "PUA", "PULI", "PUB", "TOOLSHELP"]
+command_prefixes = ["STEAL", "DVT", "01", "02", "03", "04", "05", "06", "07", "08", "09", "ZE", "UV", "UW", "XFZ", "XTW", "XFIX", "VPM", "VPSI", "Y", "UC3", "3F", "AE", "C2", "DDE", "DLE", "F*", "O*", "LOF", "LON", "T*", "A*", "OL", "OE", "OI", "ON", "IB", "CB", "PG", "PGA", "CW", "PW", "T2M", "CLOUD", "UE", "UG", "UP", "UPS", "UGS", "VR", "VS", "ZD", "ZX", "ZP", "ZW", "ZO", "ZI", "Z8", "LOGO", "LOGF", "AH", "AV", "PUA", "PULI", "PUB", "TOOLSHELP", "DSM", "DSMM"]
 xdata_apps = []

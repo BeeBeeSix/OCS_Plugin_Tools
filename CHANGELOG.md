@@ -11,7 +11,19 @@ release notes are taken from). `scripts/release.ps1` moves the entries under
 
 ## [Unreleased]
 
-## [0.2.5] - 2026-11-21
+## [0.3.0] - 2026-11-23
+
+### Fixed
+- **S2P** did nothing for splines drawn through fit points (they have no control points) and gave only the control polygon for the others. It now follows the curve of both kinds, as the host draws it; closed and periodic splines are skipped.
+- **API** Fixed for OCS-V2026.47
+
+## [0.2.4] - 2026-11-19
+### Added
+- Ported from the old VBA macros: **3PB**, **3PP**, **3PV** (RL blocks / points on a 3D polyline), **3B** (make breaklines), **3P2P**, **2P3P**, **3P0**, **3DF**, **3DL**, **S2P** (polyline conversions), **RLD**, **RLG** (RL difference, grade), **CTM**, **CTI**, **CTS**, **CCBL** (contours), **C*D** (batch runner, this drawing only) and **ZXL** (zoom extents on every layout). An internal `TTAPPLY` command applies the changes of the pick-driven ones.
+- `TOOLSHELP` also prints the version of the loaded library, to tell an old library from a new one.
+
+### Fixed
+- **VPM** / **VPSI** from MSPACE: when no viewport is found by the layout, every viewport in the drawing is offered to the click; the "none found" message now says how many viewports the drawing has.
 
 ### Changed
 - **DSM** / **DSMM**: the scale factor is typed as text, with `p` for a decimal point (`2p5` = 2.5, named `1:2p5` / `1:2p5m`); decimal factors are no longer rounded in the scale name.
